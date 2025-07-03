@@ -4,6 +4,26 @@ import sqlite3
 from transformers import pipeline
 from gtts import gTTS
 import tempfile
+import base64
+
+def set_background(image_file):
+    with open(image_file, "rb") as image:
+        encoded = base64.b64encode(image.read()).decode()
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded}");
+            background-size: cover;
+            background-position: center;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+# ✅ Call the function with your image file
+set_background("background.jpg")
 
 # Load sentiment model
 classifier = pipeline("sentiment-analysis")
